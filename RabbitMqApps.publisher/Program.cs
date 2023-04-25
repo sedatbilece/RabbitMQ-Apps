@@ -5,48 +5,63 @@ using System.Text;
 
 namespace RabbitMqApps.publisher
 {
-    internal class Program
+    public enum LogNames
+    {
+        Critical = 1,
+        Error = 2,
+        Warning = 3,
+        Info = 4
+    }
+
+
+    class Program
     {
         static void Main(string[] args)
         {
-             
             var factory = new ConnectionFactory();
             factory.Uri = new Uri("amqps://iflqkrhk:ykIuc0d4b8WuE3RX_gUx575_vULzNsUy@hawk.rmq.cloudamqp.com/iflqkrhk");
 
             using var connection = factory.CreateConnection();
 
-            // bağlantı kurulacak bağlantı
             var channel = connection.CreateModel();
 
-            // queue oluşturma 
-            //channel.QueueDeclare("hello-queue",true,false,false);
-            //string queue = ""      -> kuyruk adı
-            //bool durable = false   -> bellekten silinsin mi ?
-            //bool exclusive = true  -> sadece bu kanaldan mı bağlanılsın ?
-            //bool autoDelete = true -> subs bitince silinsin mi ?
+            channel.ExchangeDeclare("logs-direct", durable: true, type: ExchangeType.Direct);
 
-            channel.ExchangeDeclare("logs-fanout", durable: true, type: ExchangeType.Fanout);
+
+            Enum.GetNames(typeof(LogNames)).ToList().ForEach(x =>
+            {
+                var routeKey = $"route-{x}";
+                var queueName = $"direct-queue-{x}";
+                channel.QueueDeclare(queueName, true, false, false);
+
+                channel.QueueBind(queueName, "logs-direct", routeKey, null);
+
+            });
+
 
 
             Enumerable.Range(1, 50).ToList().ForEach(x =>
             {
 
-                string message = $"Message log   {x} ";
-                //mesaj byte olarak gönderilmeli
+                LogNames log = (LogNames)new Random().Next(1, 5);
+
+                string message = $"log-type: {log}";
+
                 var messageBody = Encoding.UTF8.GetBytes(message);
 
+                var routeKey = $"route-{log}";
 
-                //mesaj gönderme işlemi
-                channel.BasicPublish("logs-fanout","", null, messageBody);
+                channel.BasicPublish("logs-direct", routeKey, null, messageBody);
 
-                Console.WriteLine($"Mesaj gönderildi : {message}");
-
+                Console.WriteLine($"Log gönderilmiştir : {message}");
 
             });
 
 
-               
+
             Console.ReadLine();
+
+
         }
     }
 }
