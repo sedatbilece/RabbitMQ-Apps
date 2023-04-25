@@ -2,6 +2,7 @@
 using RabbitMQ.Client.Events;
 using System;
 using System.Text;
+using System.Threading;
 
 namespace RabbitMqApps.subscriber
 {
@@ -20,11 +21,12 @@ namespace RabbitMqApps.subscriber
 
             // queue oluşturma 
             channel.QueueDeclare("hello-queue", true, false, false);
-          
+
+            channel.BasicQos(0, 1, true);
 
             var consumer =  new EventingBasicConsumer(channel);
 
-            channel.BasicConsume("hello-queue", true, consumer);
+            channel.BasicConsume("hello-queue", false, consumer);//2. parametre oto silme isteği 
 
 
             consumer.Received += (object sender, BasicDeliverEventArgs e) =>
@@ -32,7 +34,10 @@ namespace RabbitMqApps.subscriber
 
                 var message = Encoding.UTF8.GetString(e.Body.ToArray());
 
+                Thread.Sleep(1000);
                 Console.WriteLine("Gelen Mesaj : "+message);
+
+                channel.BasicAck(e.DeliveryTag,false);// rabbitmq'ya işlemin tamamlandığını bildirir artık silebilir
             };
            
 

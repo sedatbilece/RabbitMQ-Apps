@@ -1,5 +1,6 @@
 ﻿using RabbitMQ.Client;
 using System;
+using System.Linq;
 using System.Text;
 
 namespace RabbitMqApps.publisher
@@ -25,15 +26,24 @@ namespace RabbitMqApps.publisher
             //bool autoDelete = true -> subs bitince silinsin mi ?
 
 
-            string message = "hello world ! :D";
-            //mesaj byte olarak gönderilmeli
-            var messageBody = Encoding.UTF8.GetBytes(message);
+            Enumerable.Range(1, 50).ToList().ForEach(x =>
+            {
+
+                string message = $"Message {x} ";
+                //mesaj byte olarak gönderilmeli
+                var messageBody = Encoding.UTF8.GetBytes(message);
 
 
-            //mesaj gönderme işlemi
-            channel.BasicPublish(string.Empty,"hello-queue",null,messageBody);
+                //mesaj gönderme işlemi
+                channel.BasicPublish(string.Empty, "hello-queue", null, messageBody);
 
-            Console.WriteLine(message);     
+                Console.WriteLine($"Mesaj gönderildi : {message}");
+
+
+            });
+
+
+               
             Console.ReadLine();
         }
     }
