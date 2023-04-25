@@ -21,7 +21,7 @@ namespace RabbitMqApps.subscriber
             channel.BasicQos(0, 1, false);
             var consumer = new EventingBasicConsumer(channel);
 
-            var queueName = "direct-queue-Critical";
+            var queueName = "direct-queue-Warning";
             
 
             Console.WriteLine("Logları dinleniyor...");
