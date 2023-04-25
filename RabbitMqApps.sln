@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitMqApps.publisher", "RabbitMqApps.publisher\RabbitMqApps.publisher.csproj", "{64A21A77-8AB8-436A-B6A3-3EFD99D73812}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RabbitMqApps.publisher", "RabbitMqApps.publisher\RabbitMqApps.publisher.csproj", "{64A21A77-8AB8-436A-B6A3-3EFD99D73812}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitMqApps.subscriber", "RabbitMqApps.subscriber\RabbitMqApps.subscriber.csproj", "{6896DEBD-2974-41F7-851D-8A5DAAECB7E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RabbitMqApps.subscriber", "RabbitMqApps.subscriber\RabbitMqApps.subscriber.csproj", "{6896DEBD-2974-41F7-851D-8A5DAAECB7E4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
