@@ -19,23 +19,25 @@ namespace RabbitMqApps.publisher
             var channel = connection.CreateModel();
 
             // queue oluşturma 
-            channel.QueueDeclare("hello-queue",true,false,false);
+            //channel.QueueDeclare("hello-queue",true,false,false);
             //string queue = ""      -> kuyruk adı
             //bool durable = false   -> bellekten silinsin mi ?
             //bool exclusive = true  -> sadece bu kanaldan mı bağlanılsın ?
             //bool autoDelete = true -> subs bitince silinsin mi ?
 
+            channel.ExchangeDeclare("logs-fanout", durable: true, type: ExchangeType.Fanout);
+
 
             Enumerable.Range(1, 50).ToList().ForEach(x =>
             {
 
-                string message = $"Message {x} ";
+                string message = $"Message log   {x} ";
                 //mesaj byte olarak gönderilmeli
                 var messageBody = Encoding.UTF8.GetBytes(message);
 
 
                 //mesaj gönderme işlemi
-                channel.BasicPublish(string.Empty, "hello-queue", null, messageBody);
+                channel.BasicPublish("logs-fanout","", null, messageBody);
 
                 Console.WriteLine($"Mesaj gönderildi : {message}");
 

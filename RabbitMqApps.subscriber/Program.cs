@@ -20,14 +20,21 @@ namespace RabbitMqApps.subscriber
             var channel = connection.CreateModel();
 
             // queue oluşturma 
-            channel.QueueDeclare("hello-queue", true, false, false);
+            // channel.QueueDeclare("hello-queue", true, false, false);
+
+
+            var randomQueueName = channel.QueueDeclare().QueueName;
+
+            channel.QueueBind(randomQueueName, "logs-fanout", "", null);
 
             channel.BasicQos(0, 1, true);
 
             var consumer =  new EventingBasicConsumer(channel);
 
-            channel.BasicConsume("hello-queue", false, consumer);//2. parametre oto silme isteği 
+            channel.BasicConsume(randomQueueName, false, consumer);//2. parametre oto silme isteği 
 
+
+            Console.WriteLine("Loglar dinleniyor , Kuyruk : " + randomQueueName);
 
             consumer.Received += (object sender, BasicDeliverEventArgs e) =>
             {
