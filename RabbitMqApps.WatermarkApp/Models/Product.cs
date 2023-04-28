@@ -18,7 +18,7 @@ namespace RabbitMqApps.WatermarkApp.Models
         public int  Stock { get; set; }
 
 
-        public string  PictureUrl { get; set; }
+        public string  ImageName { get; set; }
 
 
     }
