@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RabbitMQ.Client;
+using RabbitMqApps.WatermarkApp.BackgroundServices;
 using RabbitMqApps.WatermarkApp.Models;
 using RabbitMqApps.WatermarkApp.Sevices;
 using System;
@@ -28,13 +29,10 @@ namespace RabbitMqApps.WatermarkApp
         public void ConfigureServices(IServiceCollection services)
         {
 
-
-            services.AddSingleton<RabbitMQPublisher>();
-
-            services.AddSingleton<RabbitMQClientService>();
+          
 
             services.AddSingleton(sp => new ConnectionFactory() 
-            { Uri = new Uri(Configuration.GetConnectionString("RabbitMQ") ) } );
+            { Uri = new Uri(Configuration.GetConnectionString("RabbitMQ")),DispatchConsumersAsync=true } );
 
             services.AddDbContext<AppDbContext>(options =>
             {
@@ -42,6 +40,12 @@ namespace RabbitMqApps.WatermarkApp
                 options.UseInMemoryDatabase(databaseName: "productDb");
 
             });
+
+            services.AddHostedService<WatermarkService>();
+
+            services.AddSingleton<RabbitMQPublisher>();
+
+            services.AddSingleton<RabbitMQClientService>();
 
             services.AddControllersWithViews();
         }

@@ -67,7 +67,7 @@ namespace RabbitMqApps.WatermarkApp.Controllers
 
             if (ImageFile.Length > 0)
             {
-                var randomName=Guid.NewGuid()+Path.GetExtension(ImageFile.Name);
+                var randomName=Guid.NewGuid()+Path.GetExtension(ImageFile.FileName);
 
                 var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", randomName);
 

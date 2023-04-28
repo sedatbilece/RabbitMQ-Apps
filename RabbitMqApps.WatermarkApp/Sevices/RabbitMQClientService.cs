@@ -26,6 +26,8 @@ namespace RabbitMqApps.WatermarkApp.Sevices
 
         public IModel Connect()// publisher connection method
         {
+
+            _connectionFactory.DispatchConsumersAsync = true;
             _connection = _connectionFactory.CreateConnection();
 
             if(_channel is { IsOpen: true })
