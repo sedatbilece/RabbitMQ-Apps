@@ -28,11 +28,13 @@ namespace RabbitMqApps.WatermarkApp
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddSingleton(sp => new ConnectionFactory() 
-            { Uri = new Uri(Configuration.GetConnectionString("RabbitMQ") ) } );
+
+            services.AddSingleton<RabbitMQPublisher>();
 
             services.AddSingleton<RabbitMQClientService>();
-            
+
+            services.AddSingleton(sp => new ConnectionFactory() 
+            { Uri = new Uri(Configuration.GetConnectionString("RabbitMQ") ) } );
 
             services.AddDbContext<AppDbContext>(options =>
             {

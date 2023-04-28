@@ -21,7 +21,7 @@ namespace RabbitMqApps.WatermarkApp.Sevices
         {
             _connectionFactory = connectionFactory;
             _logger = logger;
-            Connect();
+          
         }
 
         public IModel Connect()// publisher connection method
