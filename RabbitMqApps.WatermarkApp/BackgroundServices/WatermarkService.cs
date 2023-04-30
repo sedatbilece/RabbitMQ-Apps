@@ -34,7 +34,7 @@ namespace RabbitMqApps.WatermarkApp.BackgroundServices
             _channel = _rabbitMQClientService.Connect();
             _channel.BasicQos(0, 1, false);
 
-            return base.StopAsync(cancellationToken);
+            return base.StartAsync(cancellationToken);
         }
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
@@ -57,13 +57,16 @@ namespace RabbitMqApps.WatermarkApp.BackgroundServices
         private Task Consumer_Received(object sender, BasicDeliverEventArgs @event)
         {
 
+            Task.Delay(1000).Wait();
+
             try
+            
             {
 
                 var ImageCreatedEvent = JsonSerializer.Deserialize<ProductImageCreatedEvent>
                 (Encoding.UTF8.GetString(@event.Body.ToArray()));
 
-                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/iamges", ImageCreatedEvent.ImageName);
+                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", ImageCreatedEvent.ImageName);
 
                 var watermark = "www.github.com/sedatbilece";
 
@@ -84,7 +87,7 @@ namespace RabbitMqApps.WatermarkApp.BackgroundServices
 
                 grapic.DrawString(watermark, font, brush, position);
 
-                img.Save("wwwroot/images/watermarks" + ImageCreatedEvent.ImageName);
+                img.Save("wwwroot/images/watermarks/" + ImageCreatedEvent.ImageName);
 
                 img.Dispose();
                 grapic.Dispose();
