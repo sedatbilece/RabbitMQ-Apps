@@ -8,12 +8,10 @@ namespace RabbitMqApps.CreateExcelApp.Models
 
 
 
-        public AppDbContext(DbContextOptions dbContextOptions) : base(dbContextOptions)
+        public AppDbContext(DbContextOptions options) : base(options)
         {
                 
         }
-
-
         public DbSet<UserFile> UserFiles { get; set; }
     }
 }

@@ -19,17 +19,19 @@ namespace RabbitMqApps.CreateExcelApp
         {
           var host = CreateHostBuilder(args).Build();
 
-            using(var scope = host.Services.CreateScope())
+            using (var scope = host.Services.CreateScope())
             {
-                var appDbContext =  scope.ServiceProvider.GetRequiredService<AppDbContext>();
-                var userManager  = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+                var appDbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+                var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
                 appDbContext.Database.Migrate();
 
-                if(appDbContext.Users.Any())
+                if (!appDbContext.Users.Any())
                 {
                     userManager.CreateAsync(new IdentityUser { UserName = "deneme", Email = "deneme@gmail.com" }, "Pass123*").Wait();
 
-                    userManager.CreateAsync(new IdentityUser { UserName = "deneme2", Email = "deneme@gmail.com" }, "Pass123*").Wait();
+                    userManager.CreateAsync(new IdentityUser { UserName = "deneme2", Email = "deneme2@gmail.com" }, "Pass123*").Wait();
+
+                    userManager.CreateAsync(new IdentityUser { UserName = "deneme3", Email = "deneme3@gmail.com" }, "Pass123*").Wait();
 
                 }
             }

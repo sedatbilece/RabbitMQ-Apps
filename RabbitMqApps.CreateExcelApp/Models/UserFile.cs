@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RabbitMqApps.CreateExcelApp.Models
@@ -10,7 +11,7 @@ namespace RabbitMqApps.CreateExcelApp.Models
         Completed
     }
 
-    public class UserFile
+    public class UserFile 
     {
 
         public int Id { get; set; } 
