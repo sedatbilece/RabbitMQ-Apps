@@ -34,6 +34,8 @@ namespace RabbitMqApps.CreateExcelApp
 
             services.AddSingleton<RabbitMQClientService>();
 
+            services.AddSingleton<RabbitMQPublisher>();
+
 
             services.AddDbContext<AppDbContext>(opt =>
             {
