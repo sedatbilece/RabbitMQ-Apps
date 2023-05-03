@@ -1,4 +1,4 @@
-﻿namespace RabbitMqApps.WatermarkApp.Sevices
+﻿namespace RabbitMqApps.WatermarkApp.Services
 {
     public class ProductImageCreatedEvent
     {

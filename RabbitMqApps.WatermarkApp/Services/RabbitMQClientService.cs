@@ -2,7 +2,7 @@
 using RabbitMQ.Client;
 using System;
 
-namespace RabbitMqApps.WatermarkApp.Sevices
+namespace RabbitMqApps.WatermarkApp.Services
 {
     public class RabbitMQClientService : IDisposable
     {

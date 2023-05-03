@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using RabbitMqApps.WatermarkApp.Models;
-using RabbitMqApps.WatermarkApp.Sevices;
+using RabbitMqApps.WatermarkApp.Services;
 
 namespace RabbitMqApps.WatermarkApp.Controllers
 {

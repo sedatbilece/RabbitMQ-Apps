@@ -8,7 +8,7 @@ using Microsoft.Extensions.Hosting;
 using RabbitMQ.Client;
 using RabbitMqApps.WatermarkApp.BackgroundServices;
 using RabbitMqApps.WatermarkApp.Models;
-using RabbitMqApps.WatermarkApp.Sevices;
+using RabbitMqApps.WatermarkApp.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -2,7 +2,7 @@
 using System.Text;
 using System.Text.Json;
 
-namespace RabbitMqApps.WatermarkApp.Sevices
+namespace RabbitMqApps.WatermarkApp.Services
 {
     public class RabbitMQPublisher
     {
