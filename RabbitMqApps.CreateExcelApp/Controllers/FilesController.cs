@@ -49,5 +49,11 @@ namespace RabbitMqApps.CreateExcelApp.Controllers
             return Ok();
 
         }
+
+        [HttpGet] 
+        public String GetTest()
+        {
+            return "testurl";
+        }
     }
 }

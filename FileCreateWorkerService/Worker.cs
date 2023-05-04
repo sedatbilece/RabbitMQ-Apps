@@ -1,7 +1,8 @@
 using ClosedXML.Excel;
 using FileCreateWorkerService.Models;
 using FileCreateWorkerService.Services;
-    using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
@@ -23,15 +24,17 @@ namespace FileCreateWorkerService
     {
         private readonly ILogger<Worker> _logger;
         private readonly RabbitMQClientService _rabbitMQClientService;
-        private readonly AdventureWorks2012Context _context;
+        private readonly IServiceProvider _serviceProvider;
+       
 
         private IModel _channel;
 
-        public Worker(ILogger<Worker> logger, RabbitMQClientService rabbitMQClientService , AdventureWorks2012Context context)
+        public Worker(ILogger<Worker> logger, RabbitMQClientService rabbitMQClientService , IServiceProvider serviceProvider)
         {
             _logger = logger;
             _rabbitMQClientService = rabbitMQClientService;
-            _context = context;
+            _serviceProvider = serviceProvider;
+            
         }
 
 
@@ -76,7 +79,7 @@ namespace FileCreateWorkerService
             multipartFormDataContent.Add( new ByteArrayContent(ms.ToArray()) , "file" , Guid.NewGuid().ToString()+".xlsx" );
 
 
-            var baseUrl = "https://localhost:44321/api/files";
+            var baseUrl = "https://localhost:44378/api/files";
 
             using(var httpClient= new HttpClient())
             {
@@ -90,12 +93,18 @@ namespace FileCreateWorkerService
             }
 
 
-
         }
 
         private DataTable GetTable(string tableName)
         {
-            List<Product> products = _context.Products.ToList();
+            List<Product> products;
+
+            using (var scope = _serviceProvider.CreateScope())
+            {
+                var context= scope.ServiceProvider.GetRequiredService<AdventureWorks2012Context>();
+
+                products = context.Products.ToList(); 
+            }
 
             DataTable table = new DataTable() { TableName = tableName };
 
