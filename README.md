@@ -8,6 +8,7 @@ This repository has been created for using RabbitMQ technology and developing ex
 In this application, the names of the uploaded images are sent to the queue, and the BackgroundService within the Web app listens to the queue, retrieves the image name, adds a watermark, and saves the modified image in a new folder.
 
 <p>
+<img src="./docs/schema1.jpeg" alt="watermark gif">
 <img src="./docs/watermarks.gif" alt="watermark gif">
  </p>
  
