@@ -12,8 +12,19 @@ In this application, the names of the uploaded images are sent to the queue, and
 <img src="./docs/watermarks.gif" alt="watermark gif">
  </p>
  
+### Excel App
+
+
 
 ### An example application with exchange, queue, publisher, and subscriber.
+
+"A separate worker service processes incoming requests in the background, reports that they have been completed via the API, and sets the status as complete.
+
+<p>
+<img src="./docs/schema2.jpeg" alt="watermark gif">
+<img src="./docs/rabbitmq-excel.gif" alt="watermark gif">
+ </p>
+
 
 <p>
 
